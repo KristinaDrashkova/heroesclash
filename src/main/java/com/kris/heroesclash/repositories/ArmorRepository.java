@@ -11,5 +11,4 @@ import org.springframework.stereotype.Repository;
 public interface ArmorRepository extends JpaRepository<Armor, Integer> {
 
     Armor getById(Integer id);
-
 }

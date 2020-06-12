@@ -19,6 +19,8 @@ import javax.persistence.Table;
 @Table(name = "armors")
 public class Armor extends Item {
 
+    private String name;
+
     private Integer defense;
 
     public Armor(Integer defense) {

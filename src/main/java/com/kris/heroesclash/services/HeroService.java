@@ -65,9 +65,12 @@ public class HeroService {
         Hero hero = heroRepository.getById(heroId);
         Integer damage = 0;
         switch (hero.getHeroClass()) {
-            case ARCHER: damage += hero.getDexterity() * 10;
-            case WARRIOR: damage += hero.getStrength() * 10;
-            case WIZARD: damage += hero.getWisdom() * 10;
+            case ARCHER:
+                damage += hero.getDexterity() * 10;
+            case WARRIOR:
+                damage += hero.getStrength() * 10;
+            case WIZARD:
+                damage += hero.getWisdom() * 10;
         }
 
         return damage + hero.getWeapon().getDamage();

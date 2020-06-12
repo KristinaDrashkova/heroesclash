@@ -5,18 +5,14 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author kristina.drashkova
@@ -53,21 +49,15 @@ public class Hero {
     @JoinColumn(name = "weapon_id", nullable = false)
     private Weapon weapon;
 
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinTable(name = "hero_item",
-            joinColumns = @JoinColumn(name = "hero_id"),
-            inverseJoinColumns = @JoinColumn(name = "item_id")
-    )
-    private Set<Item> inventory;
+    @OneToOne
+    @JoinColumn(name = "inventory_id")
+    private Inventory inventory;
 
     public Hero(String name, HeroClass heroClass) {
         this.name = name;
         this.heroClass = heroClass;
         this.level = 1;
-        this.inventory = new HashSet<>();
+        this.inventory = new Inventory();
     }
 
     public void updateDexterity(Integer updater) {
@@ -84,9 +74,12 @@ public class Hero {
 
     public void updateCharacterSpecificStats(Integer updater) {
         switch (this.heroClass) {
-            case ARCHER: updateDexterity(updater);
-            case WARRIOR: updateStrength(updater);
-            case WIZARD: updateWisdom(updater);
+            case ARCHER:
+                updateDexterity(updater);
+            case WARRIOR:
+                updateStrength(updater);
+            case WIZARD:
+                updateWisdom(updater);
 
         }
     }

@@ -27,4 +27,5 @@ public abstract class Resource extends Item {
     public Resource(Integer quantity) {
         this.quantity = quantity;
     }
+
 }

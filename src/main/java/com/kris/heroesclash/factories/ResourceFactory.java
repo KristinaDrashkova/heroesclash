@@ -12,9 +12,12 @@ import com.kris.heroesclash.entities.Wood;
 public class ResourceFactory {
     public static Resource getResource(ResourceType resourceType, Integer quantity) {
         switch (resourceType) {
-            case IRON: return new Iron(quantity);
-            case WOOD: return new Wood(quantity);
-            case LEATHER: return new Leather(quantity);
+            case IRON:
+                return new Iron(quantity);
+            case WOOD:
+                return new Wood(quantity);
+            case LEATHER:
+                return new Leather(quantity);
         }
         return null;
     }
