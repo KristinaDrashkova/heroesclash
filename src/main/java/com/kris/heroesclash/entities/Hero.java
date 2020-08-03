@@ -5,14 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * @author kristina.drashkova
@@ -29,6 +22,7 @@ public class Hero {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @Column(unique = true)
     private String name;
 
     private HeroClass heroClass;
@@ -42,11 +36,11 @@ public class Hero {
     private Integer dexterity;
 
     @ManyToOne
-    @JoinColumn(name = "armor_id", nullable = false)
+    @JoinColumn(name = "armor_id")
     private Armor armor;
 
     @ManyToOne
-    @JoinColumn(name = "weapon_id", nullable = false)
+    @JoinColumn(name = "weapon_id")
     private Weapon weapon;
 
     @OneToOne
@@ -57,7 +51,6 @@ public class Hero {
         this.name = name;
         this.heroClass = heroClass;
         this.level = 1;
-        this.inventory = new Inventory();
     }
 
     public void updateDexterity(Integer updater) {

@@ -2,7 +2,9 @@ package com.kris.heroesclash.services;
 
 import com.kris.heroesclash.entities.Hero;
 import com.kris.heroesclash.entities.HeroClass;
+import com.kris.heroesclash.entities.Inventory;
 import com.kris.heroesclash.repositories.HeroRepository;
+import com.kris.heroesclash.repositories.InventoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,19 +17,27 @@ public class HeroService {
     @Autowired
     private HeroRepository heroRepository;
 
+    @Autowired
+    private InventoryRepository inventoryRepository;
+
     public Hero createHero(String name, HeroClass heroClass) {
         Hero hero = new Hero(name, heroClass);
         hero.setDexterity(5);
         hero.setStrength(5);
         hero.setWisdom(5);
         hero.updateCharacterSpecificStats(5);
+
+        Inventory inventory = new Inventory();
+        inventoryRepository.save(inventory);
+        hero.setInventory(inventory);
+
         return heroRepository.save(hero);
     }
 
     public Hero levelUp(Integer heroId) {
         Hero hero = heroRepository.getById(heroId);
         hero.setLevel(hero.getLevel() + 1);
-        hero = updateBaseStats(hero);
+        updateBaseStats(hero);
         return heroRepository.save(hero);
     }
 
@@ -63,7 +73,7 @@ public class HeroService {
 
     public Integer getDamage(Integer heroId) {
         Hero hero = heroRepository.getById(heroId);
-        Integer damage = 0;
+        int damage = 0;
         switch (hero.getHeroClass()) {
             case ARCHER:
                 damage += hero.getDexterity() * 10;

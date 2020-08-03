@@ -14,7 +14,7 @@ public class ArmorService {
     @Autowired
     private ArmorRepository armorRepository;
 
-    public Armor createArmor(Integer defense) {
-        return armorRepository.save(new Armor(defense));
+    public Armor createArmor(String name, Integer defense) {
+        return armorRepository.save(new Armor(name, defense));
     }
 }

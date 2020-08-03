@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -19,11 +20,13 @@ import javax.persistence.Table;
 @Table(name = "armors")
 public class Armor extends Item {
 
+    @Column(unique = true)
     private String name;
 
     private Integer defense;
 
-    public Armor(Integer defense) {
-        super();
+    public Armor(String name, Integer defense) {
+        this.name = name;
+        this.defense = defense;
     }
 }
